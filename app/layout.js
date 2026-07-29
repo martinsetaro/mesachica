@@ -10,7 +10,7 @@ const manrope = Manrope({
   display: 'swap',
 });
 
-const SITE_URL = 'https://mesachicasolutions.vercel.app';
+const SITE_URL = 'https://mesachica.vercel.app';
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
