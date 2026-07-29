@@ -9,7 +9,7 @@ export default function ConsoleEasterEgg() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    window.tetris = () => setOpen(true);
+    window.mesachica = () => setOpen(true);
     return () => {
       delete window.tetris;
     };
