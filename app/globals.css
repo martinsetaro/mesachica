@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 221 38% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 221 38% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 221 38% 15%;
+    --primary: 235 40% 36%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 225 57% 22%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 235 20% 97%;
+    --muted-foreground: 225 12% 47%;
+    --accent: 290 39% 40%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 230 20% 90%;
+    --input: 230 20% 90%;
+    --ring: 235 40% 36%;
+    --radius: 0.625rem;
+    --font-heading: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+    --font-body: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+    --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+    --font-mono: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 221 38% 15%;
+    --sidebar-primary: 235 40% 36%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 235 20% 97%;
+    --sidebar-accent-foreground: 221 38% 15%;
+    --sidebar-border: 230 20% 90%;
+    --sidebar-ring: 235 40% 36%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-heading;
+  }
+
+  ::selection {
+    background-color: hsl(var(--primary) / 0.18);
+    color: hsl(var(--foreground));
+  }
+
+  /* Foco visible y consistente para navegación por teclado */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .section-eyebrow {
+    letter-spacing: 0.08em;
+  }
+
+  /* Aparición suave al hacer scroll: no bloqueante, respeta reduced motion */
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: revealIn 0.6s ease-out forwards;
+    animation-play-state: paused;
+  }
+  .reveal.in-view {
+    animation-play-state: running;
+  }
+  @keyframes revealIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .card-surface {
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+  }
+
+  /* Barrido de color en hover, de derecha a izquierda. Corto y no bloqueante. */
+  .btn-sweep {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: transparent; /* o hsl(var(--secondary) / 0.05) si querés un tinte sutil en reposo */
+    color: hsl(var(--secondary));
+    border: 1px solid hsl(var(--secondary));
+    transition: color 0.3s ease;
+  }
+  
+  .btn-sweep::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1; /* detrás del texto, pero el texto no tiene z-index propio así que hereda stacking normal */
+    background-color: hsl(var(--secondary));
+    transform: scaleX(0);
+    transform-origin: left; /* entra desde la izquierda; usá 'right' si preferís que venga del otro lado */
+    transition: transform 0.3s ease;
+  }
+  
+  .btn-sweep:hover::after,
+  .btn-sweep:focus-visible::after {
+    transform: scaleX(1);
+  }
+  
+  .btn-sweep:hover,
+  .btn-sweep:focus-visible {
+    color: hsl(var(--secondary-foreground, 0 0% 100%)); /* que el texto contraste sobre el fill */
+  }
+  .btn-sweep:hover {
+    color: hsl(var(--secondary-foreground));
+  }
+
+  .btn-sweep-ghost {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .btn-sweep-ghost::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: #fff;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  
+  .btn-sweep-ghost:hover::after,
+  .btn-sweep-ghost:focus-visible::after {
+    transform: scaleX(1);
+  }
+  
+  .btn-sweep-ghost:hover,
+  .btn-sweep-ghost:focus-visible {
+    color: #0a0a0a; /* o el color oscuro de fondo de tu página, para que el texto contraste sobre el blanco */
+    border-color: #fff;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
