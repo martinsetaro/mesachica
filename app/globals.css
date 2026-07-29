@@ -64,7 +64,6 @@
     color: hsl(var(--foreground));
   }
 
-  /* Foco visible y consistente para navegación por teclado */
   a:focus-visible,
   button:focus-visible,
   input:focus-visible,
@@ -86,7 +85,6 @@
     letter-spacing: 0.08em;
   }
 
-  /* Aparición suave al hacer scroll: no bloqueante, respeta reduced motion */
   .reveal {
     opacity: 0;
     transform: translateY(12px);
@@ -108,12 +106,11 @@
     border: 1px solid hsl(var(--border));
   }
 
-  /* Barrido de color en hover, de derecha a izquierda. Corto y no bloqueante. */
   .btn-sweep {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    background-color: transparent; /* o hsl(var(--secondary) / 0.05) si querés un tinte sutil en reposo */
+    background-color: transparent;
     color: hsl(var(--secondary));
     border: 1px solid hsl(var(--secondary));
     transition: color 0.3s ease;
@@ -123,10 +120,10 @@
     content: '';
     position: absolute;
     inset: 0;
-    z-index: -1; /* detrás del texto, pero el texto no tiene z-index propio así que hereda stacking normal */
+    z-index: -1;
     background-color: hsl(var(--secondary));
     transform: scaleX(0);
-    transform-origin: left; /* entra desde la izquierda; usá 'right' si preferís que venga del otro lado */
+    transform-origin: left;
     transition: transform 0.3s ease;
   }
   
@@ -137,7 +134,7 @@
   
   .btn-sweep:hover,
   .btn-sweep:focus-visible {
-    color: hsl(var(--secondary-foreground, 0 0% 100%)); /* que el texto contraste sobre el fill */
+    color: hsl(var(--secondary-foreground, 0 0% 100%));
   }
   .btn-sweep:hover {
     color: hsl(var(--secondary-foreground));
@@ -171,7 +168,7 @@
   
   .btn-sweep-ghost:hover,
   .btn-sweep-ghost:focus-visible {
-    color: #0a0a0a; /* o el color oscuro de fondo de tu página, para que el texto contraste sobre el blanco */
+    color: #0a0a0a;
     border-color: #fff;
   }
 }

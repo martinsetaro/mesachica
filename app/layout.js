@@ -2,6 +2,7 @@ import './globals.css';
 import { Manrope } from 'next/font/google';
 import { ToastProvider } from '@/components/ui/use-toast';
 import CrispChat from '@/components/site/CrispChat';
+import ConsoleEasterEgg from '@/components/site/ConsoleEasterEgg';
 
 const manrope = Manrope({
   subsets: ['latin'],
@@ -57,6 +58,7 @@ export default function RootLayout({ children }) {
       <body>
         <ToastProvider>{children}</ToastProvider>
         <CrispChat />
+        <ConsoleEasterEgg />
       </body>
     </html>
   );
