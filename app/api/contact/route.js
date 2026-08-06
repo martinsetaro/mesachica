@@ -1,4 +1,4 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
@@ -15,11 +15,19 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Faltan campos requeridos' }, { status: 400 });
     }
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.hostinger.com',
+      port: 465,
+      secure: true, // true para puerto 465, false para 587
+      auth: {
+        user: process.env.EMAIL_USER, // contacto@mesachica.tech
+        pass: process.env.EMAIL_PASS, // contraseña de esa casilla
+      },
+    });
 
-    await resend.emails.send({
-      from: 'Solicitudes web <onboarding@resend.dev>',
-      to: process.env.EMAIL_TO,
+    await transporter.sendMail({
+      from: `"Solicitudes web" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_TO, // contacto@mesachica.tech
       replyTo: email,
       subject: `Nueva consulta — ${company}`,
       html: `
